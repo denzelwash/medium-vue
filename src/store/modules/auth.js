@@ -10,7 +10,6 @@ export default {
     },
     loadEnd(state) {
       state.isSubmitting = false
-      // console.log(payload)
     },
     loadError(state, payload) {
       state.isSubmitting = false
@@ -27,7 +26,7 @@ export default {
       commit('loadStart')
       try {
         const response = await authApi.register(payload)
-        commit('loadEnd', response.data.user)
+        commit('loadEnd')
         return response.data.user
       } catch (error) {
         commit('loadError', error.response.data.errors)

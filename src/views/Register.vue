@@ -51,9 +51,7 @@
 export default {
   name: 'Register',
   components: {},
-  data: () => ({
-    request: 111
-  }),
+  data: () => ({}),
   computed: {
     loading() {
       return this.$store.getters.isSubmitting
