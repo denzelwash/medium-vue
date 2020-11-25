@@ -1,16 +1,13 @@
 <template>
   <div>
-   asdasd 
+    Home
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'Home',
-  components: {
-    
-  },
-  data:()=>({})
+  name: 'Home'
 }
 </script>
+
+<style></style>
