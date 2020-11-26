@@ -1,4 +1,5 @@
 import authApi from '@/api/auth'
+import {setItem} from '@/helpers/localStorage.helper'
 
 export default {
   state: () => ({
@@ -33,6 +34,7 @@ export default {
       try {
         const response = await authApi.register(payload)
         commit('loadEnd', response.data.user)
+        setItem('token', response.data.user.token)
         return response.data.user
       } catch (error) {
         commit('loadError', error.response.data.errors)

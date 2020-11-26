@@ -72,6 +72,7 @@ export default {
         password: this.password
       })
       if (user) {
+        console.log(user)
         this.$router.push({name: 'Home'})
       }
     }
