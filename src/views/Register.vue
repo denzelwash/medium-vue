@@ -16,6 +16,7 @@
                   class="form-control form-control-lg"
                   type="text"
                   placeholder="Username"
+                  v-model="username"
                 />
               </fieldset>
               <fieldset class="form-group">
@@ -23,6 +24,7 @@
                   class="form-control form-control-lg"
                   type="email"
                   placeholder="Email"
+                  v-model="email"
                 />
               </fieldset>
               <fieldset class="form-group">
@@ -30,6 +32,7 @@
                   class="form-control form-control-lg"
                   type="password"
                   placeholder="Password"
+                  v-model="password"
                 />
               </fieldset>
               <button
@@ -51,7 +54,11 @@
 export default {
   name: 'Register',
   components: {},
-  data: () => ({}),
+  data: () => ({
+    username: '',
+    email: '',
+    password: ''
+  }),
   computed: {
     loading() {
       return this.$store.getters.isSubmitting
@@ -60,11 +67,13 @@ export default {
   methods: {
     async onSubmit() {
       const user = await this.$store.dispatch('register', {
-        username: 'denaaaaaaaaaaaa',
-        email: 'asdaasd@dsasaaaaaaadaads.re',
-        password: '12345a678'
+        username: this.username,
+        email: this.email,
+        password: this.password
       })
-      console.log(user)
+      if (user) {
+        this.$router.push({name: 'Home'})
+      }
     }
   }
 }

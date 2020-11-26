@@ -2,17 +2,23 @@ import authApi from '@/api/auth'
 
 export default {
   state: () => ({
-    isSubmitting: false
+    isSubmitting: false,
+    currentUser: null,
+    validationErrors: null,
+    isLoggedIn: null
   }),
   mutations: {
     loadStart(state) {
       state.isSubmitting = true
     },
-    loadEnd(state) {
+    loadEnd(state, payload) {
       state.isSubmitting = false
+      state.currentUser = payload
+      state.isLoggedIn = true
     },
     loadError(state, payload) {
       state.isSubmitting = false
+      state.isLoggedIn = false
       console.log('load errors', payload)
     }
   },
@@ -26,7 +32,7 @@ export default {
       commit('loadStart')
       try {
         const response = await authApi.register(payload)
-        commit('loadEnd')
+        commit('loadEnd', response.data.user)
         return response.data.user
       } catch (error) {
         commit('loadError', error.response.data.errors)
