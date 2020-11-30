@@ -16,16 +16,21 @@ export default {
       state.isSubmitting = false
       state.currentUser = payload
       state.isLoggedIn = true
+      state.validationErrors = null
     },
     loadError(state, payload) {
       state.isSubmitting = false
       state.isLoggedIn = false
       console.log('load errors', payload)
+      state.validationErrors = payload
     }
   },
   getters: {
     isSubmitting(store) {
       return store.isSubmitting
+    },
+    validationErrors(store) {
+      return store.validationErrors
     }
   },
   actions: {

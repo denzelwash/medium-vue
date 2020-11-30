@@ -9,6 +9,10 @@
           <p class="text-xs-center">
             <router-link :to="{name: 'Login'}">Have an account?</router-link>
           </p>
+          <ValidationErrors
+            :errors="validationErrors"
+            v-if="validationErrors"
+          />
           <form @submit.prevent="onSubmit">
             <fieldset>
               <fieldset class="form-group">
@@ -51,9 +55,11 @@
 </template>
 
 <script>
+import ValidationErrors from '@/components/ValidationErrors'
+
 export default {
   name: 'Register',
-  components: {},
+  components: {ValidationErrors},
   data: () => ({
     username: '',
     email: '',
@@ -62,18 +68,25 @@ export default {
   computed: {
     loading() {
       return this.$store.getters.isSubmitting
+    },
+    validationErrors() {
+      return this.$store.getters.validationErrors
     }
   },
   methods: {
     async onSubmit() {
-      const user = await this.$store.dispatch('register', {
-        username: this.username,
-        email: this.email,
-        password: this.password
-      })
-      if (user) {
-        console.log(user)
-        this.$router.push({name: 'Home'})
+      try {
+        const user = await this.$store.dispatch('register', {
+          username: this.username,
+          email: this.email,
+          password: this.password
+        })
+        if (user) {
+          console.log(user)
+          this.$router.push({name: 'Home'})
+        }
+      } catch (e) {
+        this.errors = e
       }
     }
   }
