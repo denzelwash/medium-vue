@@ -8,6 +8,20 @@ export default {
     validationErrors: null,
     isLoggedIn: null
   }),
+  getters: {
+    isSubmitting(store) {
+      return store.isSubmitting
+    },
+    currentUser(store) {
+      return store.currentUser
+    },
+    validationErrors(store) {
+      return store.validationErrors
+    },
+    isLoggedIn(store) {
+      return store.isLoggedIn
+    }
+  },
   mutations: {
     loadStart(state) {
       state.isSubmitting = true
@@ -26,14 +40,6 @@ export default {
     },
     clearValidationErrors(state) {
       state.validationErrors = null
-    }
-  },
-  getters: {
-    isSubmitting(store) {
-      return store.isSubmitting
-    },
-    validationErrors(store) {
-      return store.validationErrors
     }
   },
   actions: {
