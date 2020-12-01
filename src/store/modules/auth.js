@@ -23,6 +23,9 @@ export default {
       state.isLoggedIn = false
       console.log('load errors', payload)
       state.validationErrors = payload
+    },
+    clearValidationErrors(state) {
+      state.validationErrors = null
     }
   },
   getters: {
@@ -38,6 +41,17 @@ export default {
       commit('loadStart')
       try {
         const response = await authApi.register(payload)
+        commit('loadEnd', response.data.user)
+        setItem('token', response.data.user.token)
+        return response.data.user
+      } catch (error) {
+        commit('loadError', error.response.data.errors)
+      }
+    },
+    async login({commit}, payload) {
+      commit('loadStart')
+      try {
+        const response = await authApi.login(payload)
         commit('loadEnd', response.data.user)
         setItem('token', response.data.user.token)
         return response.data.user

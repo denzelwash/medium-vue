@@ -56,6 +56,7 @@
 
 <script>
 import ValidationErrors from '@/components/ValidationErrors'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Register',
@@ -66,12 +67,10 @@ export default {
     password: ''
   }),
   computed: {
-    loading() {
-      return this.$store.getters.isSubmitting
-    },
-    validationErrors() {
-      return this.$store.getters.validationErrors
-    }
+    ...mapGetters({
+      loading: 'isSubmitting',
+      validationErrors: 'validationErrors'
+    })
   },
   methods: {
     async onSubmit() {
@@ -89,6 +88,9 @@ export default {
         this.errors = e
       }
     }
+  },
+  mounted() {
+    this.$store.commit('clearValidationErrors')
   }
 }
 </script>
