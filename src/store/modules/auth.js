@@ -4,6 +4,7 @@ import {setItem} from '@/helpers/localStorage.helper'
 export default {
   state: () => ({
     isSubmitting: false,
+    isLoading: false,
     currentUser: null,
     validationErrors: null,
     isLoggedIn: null
@@ -11,6 +12,9 @@ export default {
   getters: {
     isSubmitting(store) {
       return store.isSubmitting
+    },
+    isLoading(store) {
+      return store.isLoading
     },
     currentUser(store) {
       return store.currentUser
@@ -20,23 +24,40 @@ export default {
     },
     isLoggedIn(store) {
       return store.isLoggedIn
+    },
+    isAnonimus(store) {
+      return store.isLoggedIn === false
     }
   },
   mutations: {
-    loadStart(state) {
+    submitStart(state) {
       state.isSubmitting = true
     },
-    loadEnd(state, payload) {
+    submitEnd(state, payload) {
       state.isSubmitting = false
       state.currentUser = payload
       state.isLoggedIn = true
       state.validationErrors = null
     },
-    loadError(state, payload) {
+    submitError(state, payload) {
       state.isSubmitting = false
       state.isLoggedIn = false
       console.log('load errors', payload)
       state.validationErrors = payload
+    },
+    getCurrentUserStart(state) {
+      state.isLoading = true
+    },
+    getCurrentUserEnd(state, payload) {
+      state.isLoading = false
+      state.currentUser = payload
+      state.isLoggedIn = true
+      state.validationErrors = null
+    },
+    getCurrentUserError(state) {
+      state.isLoading = false
+      state.isLoggedIn = false
+      state.currentUser = null
     },
     clearValidationErrors(state) {
       state.validationErrors = null
@@ -44,25 +65,35 @@ export default {
   },
   actions: {
     async register({commit}, payload) {
-      commit('loadStart')
+      commit('submitStart')
       try {
         const response = await authApi.register(payload)
-        commit('loadEnd', response.data.user)
+        commit('submitEnd', response.data.user)
         setItem('token', response.data.user.token)
         return response.data.user
       } catch (error) {
-        commit('loadError', error.response.data.errors)
+        commit('submitError', error.response.data.errors)
       }
     },
     async login({commit}, payload) {
-      commit('loadStart')
+      commit('submitStart')
       try {
         const response = await authApi.login(payload)
-        commit('loadEnd', response.data.user)
+        commit('submitEnd', response.data.user)
         setItem('token', response.data.user.token)
         return response.data.user
       } catch (error) {
-        commit('loadError', error.response.data.errors)
+        commit('submitError', error.response.data.errors)
+      }
+    },
+    async getCurrentUser({commit}) {
+      commit('getCurrentUserStart')
+      try {
+        const response = await authApi.getCurrentUser()
+        commit('getCurrentUserEnd', response.data.user)
+        return response.data.user
+      } catch (error) {
+        commit('getCurrentUserError', error.response.data.errors)
       }
     }
   },

@@ -15,26 +15,7 @@
               >Home</router-link
             >
           </li>
-          <template v-if="!isLoggedIn">
-            <li class="nav-item">
-              <router-link
-                :to="{name: 'Login'}"
-                class="nav-link"
-                active-class="active"
-                >Sign in</router-link
-              >
-            </li>
-
-            <li class="nav-item">
-              <router-link
-                :to="{name: 'Register'}"
-                class="nav-link"
-                active-class="active"
-                >Sign up</router-link
-              >
-            </li>
-          </template>
-          <template v-else>
+          <template v-if="isLoggedIn">
             <li class="nav-item">
               <router-link
                 :to="{name: 'NewArticle'}"
@@ -43,7 +24,6 @@
                 >New Article</router-link
               >
             </li>
-
             <li class="nav-item">
               <router-link
                 :to="{name: 'Settings'}"
@@ -52,7 +32,6 @@
                 ><i class="ion-gear-a"></i>&nbsp;Settings
               </router-link>
             </li>
-
             <li class="nav-item">
               <router-link
                 :to="{name: 'Profile', params: {slug: currentUser.username}}"
@@ -62,6 +41,24 @@
                 <img :src="currentUser.image" class="user-pic" />
                 {{ currentUser.username }}
               </router-link>
+            </li>
+          </template>
+          <template v-if="isAnonimus">
+            <li class="nav-item">
+              <router-link
+                :to="{name: 'Login'}"
+                class="nav-link"
+                active-class="active"
+                >Sign in</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link
+                :to="{name: 'Register'}"
+                class="nav-link"
+                active-class="active"
+                >Sign up</router-link
+              >
             </li>
           </template>
         </ul>
@@ -76,7 +73,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'Topbar',
   computed: {
-    ...mapGetters(['currentUser', 'isLoggedIn'])
+    ...mapGetters(['currentUser', 'isLoggedIn', 'isAnonimus'])
   }
 }
 </script>

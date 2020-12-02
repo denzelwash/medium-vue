@@ -11,6 +11,11 @@ import Topbar from '@/components/Topbar'
 export default {
   components: {
     Topbar
+  },
+  mounted() {
+    if (!this.$store.getters.isLoggedIn) {
+      this.$store.dispatch('getCurrentUser')
+    }
   }
 }
 </script>
