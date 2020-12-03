@@ -72,7 +72,7 @@ export default {
         })
         if (user) {
           console.log(user)
-          this.$router.push({name: 'Home'})
+          this.$router.push({name: 'GlobalFeed'})
         }
       } catch (e) {
         this.errors = e

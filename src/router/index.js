@@ -2,15 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Register from '../views/Register'
 import Login from '../views/Login'
-import Home from '../views/Home'
+import GlobalFeed from '../views/GlobalFeed'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'GlobalFeed',
+    component: GlobalFeed
   },
   {
     path: '/register',

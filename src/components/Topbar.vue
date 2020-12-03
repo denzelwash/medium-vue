@@ -2,13 +2,13 @@
   <div>
     <nav class="navbar navbar-light">
       <div class="container">
-        <router-link :to="{name: 'Home'}" class="navbar-brand"
+        <router-link :to="{name: 'GlobalFeed'}" class="navbar-brand"
           >MediumClone</router-link
         >
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
             <router-link
-              :to="{name: 'Home'}"
+              :to="{name: 'GlobalFeed'}"
               class="nav-link"
               active-class="active"
               exact
