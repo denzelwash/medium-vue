@@ -6,6 +6,17 @@ export default {
     isLoading: false,
     errors: null
   }),
+  getters: {
+    feedData(state) {
+      return state.data
+    },
+    feedIsLoading(state) {
+      return state.isLoading
+    },
+    feedErrors(state) {
+      return state.errors
+    }
+  },
   mutations: {
     getFeedStart(state) {
       state.data = null
@@ -26,7 +37,6 @@ export default {
       try {
         const response = await feedApi(payload.url)
         commit('getFeedEnd', response.data)
-        console.log(response.data)
         return response.data
       } catch (e) {
         console.log(e)

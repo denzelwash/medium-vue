@@ -1,46 +1,83 @@
 <template>
-  <div class="article-preview">
-    <div class="article-meta">
-      <a href="#/@aji">
-        <img src="https://static.productionready.io/images/smiley-cyrus.jpg" />
-      </a>
+  <div>
+    <div v-if="loading">Loading...</div>
+    <div v-if="errors">Error {{ errors }}</div>
+    <div v-if="feed">
+      <div
+        class="article-preview"
+        v-for="(article, i) in feed.articles"
+        :key="i"
+      >
+        <div class="article-meta">
+          <router-link
+            :to="{name: 'UserProfile', params: {slug: article.author.username}}"
+          >
+            <img :src="article.author.image" />
+          </router-link>
 
-      <div class="info">
-        <a class="author" href="#/@aji">aji</a>
-        <span class="date">December 2, 2020</span>
+          <div class="info">
+            <router-link
+              class="author"
+              :to="{
+                name: 'UserProfile',
+                params: {slug: article.author.username}
+              }"
+            >
+              {{ article.author.username }}
+            </router-link>
+            <span class="date">{{ new Date(article.createdAt) }}</span>
+          </div>
+
+          <button class="btn btn-sm btn-outline-primary">
+            <i class="ion-heart"></i>
+            <span>
+              1
+            </span>
+          </button>
+        </div>
+
+        <router-link
+          :to="{name: 'Article', params: {slug: article.slug}}"
+          class="preview-link"
+        >
+          <h1>{{ article.title }}</h1>
+          <p>
+            {{ article.description }}
+          </p>
+          <span>Read more...</span>
+          <ul class="tag-list">
+            <li
+              v-for="(tag, i) in article.tagList"
+              :key="i"
+              class="tag-default tag-pill tag-outline"
+            >
+              {{ tag }}
+            </li>
+          </ul>
+        </router-link>
       </div>
-
-      <button class="btn btn-sm btn-outline-primary">
-        <i class="ion-heart"></i>
-        <span class="ng-binding ng-scope">
-          1
-        </span>
-      </button>
     </div>
-
-    <a class="preview-link" href="#">
-      <h1>test</h1>
-      <p>
-        test
-      </p>
-      <span>Read more...</span>
-      <ul class="tag-list">
-        <li class="tag-default tag-pill tag-outline">
-          test
-        </li>
-      </ul>
-    </a>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'Feed',
+  data: () => ({}),
   props: {
     apiUrl: {
       type: String,
       required: true
     }
+  },
+  computed: {
+    ...mapGetters({
+      feed: 'feedData',
+      loading: 'feedIsLoading',
+      errors: 'feedErrors'
+    })
   },
   async mounted() {
     await this.$store.dispatch('getFeed', {url: this.apiUrl})
