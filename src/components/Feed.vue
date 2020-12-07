@@ -56,16 +56,32 @@
           </ul>
         </router-link>
       </div>
+      <Pagination
+        :total="total"
+        :limit="limit"
+        :currentPage="currentPage"
+        :path="path"
+        @click-page="clickPage"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Feed',
-  data: () => ({}),
+  components: {
+    Pagination
+  },
+  data: () => ({
+    total: 500,
+    limit: 10,
+    currentPage: 5,
+    path: '/'
+  }),
   props: {
     apiUrl: {
       type: String,
@@ -79,8 +95,18 @@ export default {
       errors: 'feedErrors'
     })
   },
+  methods: {
+    async clickPage(page) {
+      const offset = page === 1 ? 0 : (page - 1) * this.limit
+      await this.$store.dispatch('getFeed', {
+        url: `/articles?limit=${this.limit}&offset=${offset}`
+      })
+      this.currentPage = page
+    }
+  },
   async mounted() {
     await this.$store.dispatch('getFeed', {url: this.apiUrl})
+    console.log(this.$route)
   }
 }
 </script>

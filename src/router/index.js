@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Register from '../views/Register'
 import Login from '../views/Login'
 import GlobalFeed from '../views/GlobalFeed'
-// import UserProfile from '../views/UserProfile'
+import UserProfile from '../views/UserProfile'
 // import Article from '../views/Article'
 // import YourFeed from '../views/YourFeed'
 
@@ -58,7 +58,7 @@ const routes = [
   {
     path: '/profiles/:slug',
     name: 'UserProfile',
-    component: GlobalFeed
+    component: UserProfile
   },
   {
     path: '/profiles/:slug/favorites',

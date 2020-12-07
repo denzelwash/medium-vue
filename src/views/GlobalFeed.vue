@@ -63,7 +63,7 @@ export default {
     Feed
   },
   data: () => ({
-    apiUrl: '/articles'
+    apiUrl: '/articles?limit=10'
   })
 }
 </script>
