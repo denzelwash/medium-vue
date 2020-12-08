@@ -2,7 +2,7 @@
   <div>
     <div v-if="loading">Loading...</div>
     <div v-if="errors">Error {{ errors }}</div>
-    <div v-if="feed">
+    <div v-if="feed" :key="currentPage">
       <div
         class="article-preview"
         v-for="(article, i) in feed.articles"
@@ -61,7 +61,6 @@
         :limit="limit"
         :currentPage="currentPage"
         :path="path"
-        @click-page="clickPage"
       />
     </div>
   </div>
@@ -95,15 +94,7 @@ export default {
       errors: 'feedErrors'
     })
   },
-  methods: {
-    async clickPage(page) {
-      const offset = page === 1 ? 0 : (page - 1) * this.limit
-      await this.$store.dispatch('getFeed', {
-        url: `/articles?limit=${this.limit}&offset=${offset}`
-      })
-      this.currentPage = page
-    }
-  },
+  methods: {},
   async mounted() {
     await this.$store.dispatch('getFeed', {url: this.apiUrl})
   }

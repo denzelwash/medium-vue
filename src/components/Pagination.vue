@@ -1,27 +1,27 @@
 <template>
-  <div>
-    <nav>
-      <ul class="pagination">
-        <li
-          class="page-item"
-          v-for="page in pages"
-          :key="page"
-          :class="{active: page === currentPage}"
+  <nav>
+    <ul class="pagination">
+      <li
+        class="page-item"
+        v-for="page in pages"
+        :key="page"
+        :class="{active: page === currentPage}"
+      >
+        <a
+          href=""
+          class="page-link"
+          @click.prevent="$router.push({path: path, query: {page: page}})"
         >
-          <a
-            href="#"
-            class="page-link"
-            @click.prevent="$emit('click-page', page)"
-          >
-            {{ page }}
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+          {{ page }}
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
+import {range} from '@/helpers/utils'
+
 export default {
   name: 'Pagination',
   props: {
@@ -44,7 +44,8 @@ export default {
   },
   computed: {
     pages() {
-      return Math.ceil(this.total / this.limit)
+      const maxPage = Math.ceil(this.total / this.limit)
+      return range(1, maxPage)
     }
   }
 }
