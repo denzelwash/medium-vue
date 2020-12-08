@@ -1,26 +1,33 @@
 <template>
   <div>
-    <div v-if="loading">Loading...</div>
-    <div v-if="errors">Error {{ errors }}</div>
-    <div v-if="feed" :key="currentPage">
-      <div
-        class="article-preview"
-        v-for="(article, i) in feed.articles"
-        :key="i"
-      >
+    <div v-if="loading">
+      Loading...
+    </div>
+    <div v-if="errors">
+      Error
+      {{ errors }}
+    </div>
+    <div v-if="feed">
+      <div class="article-preview" v-for="(article, i) in feed.articles" :key="i">
         <div class="article-meta">
           <router-link
-            :to="{name: 'UserProfile', params: {slug: article.author.username}}"
+            :to="{
+              name: 'UserProfile',
+              params: {
+                slug: article.author.username
+              }
+            }"
           >
             <img :src="article.author.image" />
           </router-link>
-
           <div class="info">
             <router-link
               class="author"
               :to="{
                 name: 'UserProfile',
-                params: {slug: article.author.username}
+                params: {
+                  slug: article.author.username
+                }
               }"
             >
               {{ article.author.username }}
@@ -37,31 +44,29 @@
         </div>
 
         <router-link
-          :to="{name: 'Article', params: {slug: article.slug}}"
+          :to="{
+            name: 'Article',
+            params: {
+              slug: article.slug
+            }
+          }"
           class="preview-link"
         >
-          <h1>{{ article.title }}</h1>
+          <h1>
+            {{ article.title }}
+          </h1>
           <p>
             {{ article.description }}
           </p>
           <span>Read more...</span>
           <ul class="tag-list">
-            <li
-              v-for="(tag, i) in article.tagList"
-              :key="i"
-              class="tag-default tag-pill tag-outline"
-            >
+            <li v-for="(tag, i) in article.tagList" :key="i" class="tag-default tag-pill tag-outline">
               {{ tag }}
             </li>
           </ul>
         </router-link>
       </div>
-      <Pagination
-        :total="total"
-        :limit="limit"
-        :currentPage="currentPage"
-        :path="path"
-      />
+      <Pagination :total="feed.articlesCount" :limit="limit" :currentPage="currentPage" :path="path" />
     </div>
   </div>
 </template>
@@ -69,6 +74,8 @@
 <script>
 import {mapGetters} from 'vuex'
 import Pagination from '@/components/Pagination'
+import {limit} from '@/helpers/vars'
+import queryString from 'query-string'
 
 export default {
   name: 'Feed',
@@ -76,10 +83,7 @@ export default {
     Pagination
   },
   data: () => ({
-    total: 500,
-    limit: 10,
-    currentPage: 5,
-    path: '/'
+    limit
   }),
   props: {
     apiUrl: {
@@ -92,11 +96,36 @@ export default {
       feed: 'feedData',
       loading: 'feedIsLoading',
       errors: 'feedErrors'
-    })
+    }),
+    currentPage() {
+      return +this.$route.query.page || 1
+    },
+    path() {
+      return this.$route.path
+    },
+    offset() {
+      return this.currentPage * limit - limit
+    }
   },
-  methods: {},
+  watch: {
+    currentPage() {
+      this.fetchFeed()
+    }
+  },
+  methods: {
+    async fetchFeed() {
+      const parsedUrl = queryString.parseUrl(this.apiUrl)
+      let path = queryString.stringify({
+        limit: this.limit,
+        offset: this.offset,
+        ...parsedUrl.query
+      })
+      path = parsedUrl.url + '?' + path
+      await this.$store.dispatch('getFeed', {url: path})
+    }
+  },
   async mounted() {
-    await this.$store.dispatch('getFeed', {url: this.apiUrl})
+    this.fetchFeed(this.offset)
   }
 }
 </script>

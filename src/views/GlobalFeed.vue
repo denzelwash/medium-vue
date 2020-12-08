@@ -27,9 +27,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="" class="nav-link active">
-                  <i class="ion-pound"></i> test
-                </a>
+                <a href="" class="nav-link active"> <i class="ion-pound"></i> test </a>
               </li>
             </ul>
           </div>
@@ -63,7 +61,7 @@ export default {
     Feed
   },
   data: () => ({
-    apiUrl: '/articles?limit=10'
+    apiUrl: '/articles'
   })
 }
 </script>

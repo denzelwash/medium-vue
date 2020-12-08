@@ -1,7 +1,7 @@
 <template>
   <div>
-    User Profile <br/>
-    Profile {{$route.params.slug}}
+    User Profile <br />
+    Profile {{ $route.params.slug }}
   </div>
 </template>
 

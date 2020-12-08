@@ -1,17 +1,8 @@
 <template>
   <nav>
     <ul class="pagination">
-      <li
-        class="page-item"
-        v-for="page in pages"
-        :key="page"
-        :class="{active: page === currentPage}"
-      >
-        <a
-          href=""
-          class="page-link"
-          @click.prevent="$router.push({path: path, query: {page: page}})"
-        >
+      <li class="page-item" v-for="page in pages" :key="page" :class="{active: page === currentPage}">
+        <a href="" class="page-link" @click.prevent="$router.push({path: path, query: {page: page}})">
           {{ page }}
         </a>
       </li>

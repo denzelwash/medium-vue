@@ -9,33 +9,16 @@
           <p class="text-xs-center">
             <router-link :to="{name: 'Register'}">Need an account?</router-link>
           </p>
-          <ValidationErrors
-            :errors="validationErrors"
-            v-if="validationErrors"
-          />
+          <ValidationErrors :errors="validationErrors" v-if="validationErrors" />
           <form @submit.prevent="onSubmit">
             <fieldset>
               <fieldset class="form-group">
-                <input
-                  class="form-control form-control-lg"
-                  type="email"
-                  placeholder="Email"
-                  v-model="email"
-                />
+                <input class="form-control form-control-lg" type="email" placeholder="Email" v-model="email" />
               </fieldset>
               <fieldset class="form-group">
-                <input
-                  class="form-control form-control-lg"
-                  type="password"
-                  placeholder="Password"
-                  v-model="password"
-                />
+                <input class="form-control form-control-lg" type="password" placeholder="Password" v-model="password" />
               </fieldset>
-              <button
-                :disabled="loading"
-                class="btn btn-lg btn-primary pull-xs-right"
-                type="submit"
-              >
+              <button :disabled="loading" class="btn btn-lg btn-primary pull-xs-right" type="submit">
                 Sign in
               </button>
             </fieldset>
