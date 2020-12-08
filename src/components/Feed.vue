@@ -1,10 +1,8 @@
 <template>
   <div>
-    <div v-if="loading">
-      Loading...
-    </div>
-    <div v-if="errors">
-      Error
+    <div class="message" v-if="loading">Loading articles...</div>
+    <div class="message" v-if="errors">
+      Loading Error
       {{ errors }}
     </div>
     <div v-if="feed">
@@ -32,7 +30,7 @@
             >
               {{ article.author.username }}
             </router-link>
-            <span class="date">{{ new Date(article.createdAt) }}</span>
+            <span class="date">{{ formatDate(article.createdAt) }}</span>
           </div>
 
           <button class="btn btn-sm btn-outline-primary">
@@ -75,6 +73,7 @@
 import {mapGetters} from 'vuex'
 import Pagination from '@/components/Pagination'
 import {limit} from '@/helpers/vars'
+import {date} from '@/helpers/utils'
 import queryString from 'query-string'
 
 export default {
@@ -122,6 +121,9 @@ export default {
       })
       path = parsedUrl.url + '?' + path
       await this.$store.dispatch('getFeed', {url: path})
+    },
+    formatDate(time) {
+      return date(time)
     }
   },
   async mounted() {
@@ -136,5 +138,8 @@ export default {
   .btn-sm {
     margin-left: auto;
   }
+}
+.message {
+  margin: 1.5rem 0;
 }
 </style>

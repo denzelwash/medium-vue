@@ -4285,6 +4285,10 @@ input[type='button'].btn-block {
   border-top-left-radius: 0;
 }
 
+.nav-pills {
+  display: flex;
+}
+
 .nav-pills::after {
   content: '';
   display: table;
