@@ -106,7 +106,6 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('getFeed', {url: this.apiUrl})
-    console.log(this.$route)
   }
 }
 </script>

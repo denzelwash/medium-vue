@@ -39,7 +39,6 @@ export default {
         commit('getFeedEnd', response.data)
         return response.data
       } catch (e) {
-        console.log(e)
         commit('getFeedError', e)
       }
     }
