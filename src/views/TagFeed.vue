@@ -4,15 +4,7 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-9">
-          <div class="feed-toggle">
-            <ul class="nav nav-pills outline-active">
-              <li class="nav-item">
-                <a href="" class="nav-link active">
-                  Global Feed
-                </a>
-              </li>
-            </ul>
-          </div>
+          <FeedToggler :tagName="$route.params.slug" />
           <Feed :apiUrl="apiUrl" />
         </div>
         <div class="col-md-3">
@@ -27,13 +19,15 @@
 import Feed from '@/components/Feed'
 import PopularTags from '@/components/PopularTags'
 import Banner from '@/components/Banner'
+import FeedToggler from '@/components/FeedToggler'
 
 export default {
   name: 'TagFeed',
   components: {
     Feed,
     PopularTags,
-    Banner
+    Banner,
+    FeedToggler
   },
   data: () => ({}),
   computed: {
