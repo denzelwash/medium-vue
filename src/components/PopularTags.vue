@@ -18,12 +18,8 @@
         >{{ tag }}‌</a
       >
     </div>
-    <div v-if="loading">
-      Loading tags...
-    </div>
-    <div v-if="errors">
-      Loading error
-    </div>
+    <Loading v-if="loading" />
+    <Error v-if="errors" :errors="errors" />
     <div v-if="emptyTags" class="post-preview">
       No tags are here... yet.
     </div>
@@ -32,9 +28,15 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import Loading from '@/components/Loading'
+import Error from '@/components/Error'
 
 export default {
   name: 'PopularTags',
+  components: {
+    Loading,
+    Error
+  },
   computed: {
     ...mapGetters({
       tags: 'tagsData',

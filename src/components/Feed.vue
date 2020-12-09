@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div class="message" v-if="loading">Loading articles...</div>
-    <div class="message" v-if="errors">
-      Loading Error
-      {{ errors }}
-    </div>
+    <Loading v-if="loading" />
+    <Error v-if="errors" :errors="errors" />
     <div v-if="feed">
       <div class="article-preview" v-for="(article, i) in feed.articles" :key="i">
         <div class="article-meta">
@@ -72,6 +69,8 @@
 <script>
 import {mapGetters} from 'vuex'
 import Pagination from '@/components/Pagination'
+import Loading from '@/components/Loading'
+import Error from '@/components/Error'
 import {limit} from '@/helpers/vars'
 import {date} from '@/helpers/utils'
 import queryString from 'query-string'
@@ -79,7 +78,9 @@ import queryString from 'query-string'
 export default {
   name: 'Feed',
   components: {
-    Pagination
+    Pagination,
+    Loading,
+    Error
   },
   data: () => ({
     limit
@@ -138,8 +139,5 @@ export default {
   .btn-sm {
     margin-left: auto;
   }
-}
-.message {
-  margin: 1.5rem 0;
 }
 </style>
