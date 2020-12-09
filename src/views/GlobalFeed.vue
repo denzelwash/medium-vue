@@ -21,21 +21,10 @@
               </li>
             </ul>
           </div>
-          <Feed :apiUrl="apiUrl" />
+          <Feed :apiUrl="apiArticlesUrl" />
         </div>
         <div class="col-md-3">
-          <div class="sidebar">
-            <p>Popular Tags</p>
-            <div class="tag-list" ng-show="$ctrl.tags">
-              <a href="" class="tag-default tag-pill">‌</a>
-            </div>
-            <div>
-              Loading tags...
-            </div>
-            <div class="post-preview">
-              No tags are here... yet.
-            </div>
-          </div>
+          <PopularTags />
         </div>
       </div>
     </div>
@@ -44,14 +33,16 @@
 
 <script>
 import Feed from '@/components/Feed'
+import PopularTags from '@/components/PopularTags'
 
 export default {
   name: 'GlobalFeed',
   components: {
-    Feed
+    Feed,
+    PopularTags
   },
   data: () => ({
-    apiUrl: '/articles'
+    apiArticlesUrl: '/articles'
   })
 }
 </script>
