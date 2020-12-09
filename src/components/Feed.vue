@@ -100,6 +100,9 @@ export default {
     currentPage() {
       return +this.$route.query.page || 1
     },
+    currentTag() {
+      return this.$route.params.slug
+    },
     path() {
       return this.$route.path
     },
@@ -109,6 +112,9 @@ export default {
   },
   watch: {
     currentPage() {
+      this.fetchFeed()
+    },
+    currentTag() {
       this.fetchFeed()
     }
   },

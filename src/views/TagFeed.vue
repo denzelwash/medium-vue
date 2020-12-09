@@ -29,15 +29,18 @@ import PopularTags from '@/components/PopularTags'
 import Banner from '@/components/Banner'
 
 export default {
-  name: 'GlobalFeed',
+  name: 'TagFeed',
   components: {
     Feed,
     PopularTags,
     Banner
   },
-  data: () => ({
-    apiUrl: '/articles'
-  })
+  data: () => ({}),
+  computed: {
+    apiUrl() {
+      return `/articles?tag=${this.$route.params.slug}`
+    }
+  }
 }
 </script>
 

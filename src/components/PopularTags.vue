@@ -7,7 +7,7 @@
         :key="i"
         @click.prevent="
           $router.push({
-            name: 'Tag',
+            name: 'TagFeed',
             params: {
               slug: tag
             }
