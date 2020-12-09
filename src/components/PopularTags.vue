@@ -5,14 +5,7 @@
       <a
         v-for="(tag, i) in tags"
         :key="i"
-        @click.prevent="
-          $router.push({
-            name: 'TagFeed',
-            params: {
-              slug: tag
-            }
-          })
-        "
+        @click.prevent="$router.push({name: 'TagFeed', params: {slug: tag}}).catch(() => {})"
         href=""
         class="tag-default tag-pill"
         >{{ tag }}‌</a
