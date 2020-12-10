@@ -20,7 +20,7 @@
                 <router-link class="btn btn-outline-secondary btn-sm" :to="{name: 'EditArticle', params: {slug: article.author.username}}">
                   <i class="ion-edit"></i> Edit Article
                 </router-link>
-                <button class="btn btn-outline-danger btn-sm"><i class="ion-trash-a"></i> Delete Article</button>
+                <button class="btn btn-outline-danger btn-sm" @click="deleteArticle"><i class="ion-trash-a"></i> Delete Article</button>
               </span>
               <!-- Otherwise, show favorite & follow buttons -->
               <span v-else>
@@ -141,12 +141,15 @@ export default {
   methods: {
     formatDate(time) {
       return date(time)
+    },
+    async deleteArticle() {
+      await this.$store.dispatch('deleteArticle', {slug: this.$route.params.slug}).then(() => {
+        this.$router.push({name: 'GlobalFeed'})
+      })
     }
   },
   async mounted() {
-    const slug = this.$route.params.slug
-    const article = await this.$store.dispatch('getArticle', {slug})
-    console.log(article)
+    await this.$store.dispatch('getArticle', {slug: this.$route.params.slug})
   }
 }
 </script>

@@ -4,6 +4,11 @@ const getArticle = payload => {
   return axios.get(`/articles/${payload}`)
 }
 
+const deleteArticle = payload => {
+  return axios.delete(`/articles/${payload}`)
+}
+
 export default {
-  getArticle
+  getArticle,
+  deleteArticle
 }

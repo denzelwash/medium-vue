@@ -42,6 +42,14 @@ export default {
         commit('getArticleError', e)
         console.log(e)
       }
+    },
+    async deleteArticle({commit}, {slug}) {
+      try {
+        return await articleApi.deleteArticle(slug)
+      } catch (e) {
+        commit('getArticleError', e)
+        console.log(e)
+      }
     }
   }
 }
