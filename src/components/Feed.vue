@@ -31,11 +31,7 @@
             {{ article.description }}
           </p>
           <span>Read more...</span>
-          <ul class="tag-list">
-            <li v-for="(tag, i) in article.tagList" :key="i" class="tag-default tag-pill tag-outline">
-              {{ tag }}
-            </li>
-          </ul>
+          <TagList :tags="article.tagList" />
         </router-link>
       </div>
       <Pagination :total="feed.articlesCount" :limit="limit" :currentPage="currentPage" :path="path" />
@@ -48,6 +44,7 @@ import {mapGetters} from 'vuex'
 import Pagination from '@/components/Pagination'
 import Loading from '@/components/Loading'
 import Error from '@/components/Error'
+import TagList from '@/components/TagList'
 import {limit} from '@/helpers/vars'
 import {date} from '@/helpers/utils'
 import queryString from 'query-string'
@@ -57,7 +54,8 @@ export default {
   components: {
     Pagination,
     Loading,
-    Error
+    Error,
+    TagList
   },
   data: () => ({
     limit

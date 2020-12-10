@@ -48,9 +48,7 @@
               </div>
             </div>
 
-            <ul class="tag-list" v-if="article.tagList">
-              <li v-for="(tag, i) in article.tagList" :key="i" class="tag-default tag-pill tag-outline">{{ tag }}</li>
-            </ul>
+            <TagList :tags="article.tagList" />
           </div>
         </div>
         <hr />
@@ -120,12 +118,14 @@ import {mapGetters} from 'vuex'
 import {date} from '@/helpers/utils'
 import Loading from '@/components/Loading'
 import Error from '@/components/Error'
+import TagList from '@/components/TagList'
 
 export default {
   name: 'Article',
   components: {
     Loading,
-    Error
+    Error,
+    TagList
   },
   computed: {
     ...mapGetters({
