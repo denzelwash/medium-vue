@@ -5,26 +5,11 @@
     <div v-if="feed">
       <div class="article-preview" v-for="(article, i) in feed.articles" :key="i">
         <div class="article-meta">
-          <router-link
-            :to="{
-              name: 'UserProfile',
-              params: {
-                slug: article.author.username
-              }
-            }"
-          >
+          <router-link :to="{name: 'UserProfile', params: {slug: article.author.username}}">
             <img :src="article.author.image" />
           </router-link>
           <div class="info">
-            <router-link
-              class="author"
-              :to="{
-                name: 'UserProfile',
-                params: {
-                  slug: article.author.username
-                }
-              }"
-            >
+            <router-link class="author" :to="{name: 'UserProfile', params: {slug: article.author.username}}">
               {{ article.author.username }}
             </router-link>
             <span class="date">{{ formatDate(article.createdAt) }}</span>
@@ -38,15 +23,7 @@
           </button>
         </div>
 
-        <router-link
-          :to="{
-            name: 'Article',
-            params: {
-              slug: article.slug
-            }
-          }"
-          class="preview-link"
-        >
+        <router-link :to="{name: 'Article', params: {slug: article.slug}}" class="preview-link">
           <h1>
             {{ article.title }}
           </h1>
