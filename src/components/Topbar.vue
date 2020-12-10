@@ -9,7 +9,7 @@
           </li>
           <template v-if="isLoggedIn">
             <li class="nav-item">
-              <router-link :to="{name: 'NewArticle'}" class="nav-link" active-class="active"
+              <router-link :to="{name: 'CreateArticle'}" class="nav-link" active-class="active"
                 ><i class="ion-compose"></i>New Article</router-link
               >
             </li>

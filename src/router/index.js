@@ -7,6 +7,7 @@ import UserProfile from '../views/UserProfile'
 import YourFeed from '../views/YourFeed'
 import TagFeed from '../views/TagFeed'
 import Article from '../views/Article'
+import CreateArticle from '../views/CreateArticle'
 import EditArticle from '../views/EditArticle'
 
 Vue.use(VueRouter)
@@ -40,17 +41,17 @@ const routes = [
   {
     path: '/articles/new',
     name: 'CreateArticle',
-    component: GlobalFeed
-  },
-  {
-    path: '/articles/:slug',
-    name: 'Article',
-    component: Article
+    component: CreateArticle
   },
   {
     path: '/articles/:slug/edit',
     name: 'EditArticle',
     component: EditArticle
+  },
+  {
+    path: '/articles/:slug',
+    name: 'Article',
+    component: Article
   },
   {
     path: '/settings',

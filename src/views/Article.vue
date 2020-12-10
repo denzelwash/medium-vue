@@ -17,7 +17,7 @@
             <div>
               <!-- If current user is the author, show edit/delete buttons -->
               <span v-if="isMyArticle">
-                <router-link class="btn btn-outline-secondary btn-sm" :to="{name: 'EditArticle', params: {slug: article.author.username}}">
+                <router-link class="btn btn-outline-secondary btn-sm" :to="{name: 'EditArticle', params: {slug: article.slug}}">
                   <i class="ion-edit"></i> Edit Article
                 </router-link>
                 <button class="btn btn-outline-danger btn-sm" @click="deleteArticle"><i class="ion-trash-a"></i> Delete Article</button>
