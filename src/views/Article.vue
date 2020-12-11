@@ -44,7 +44,7 @@
           <div class="col-xs-12">
             <div>
               <div>
-                <p>{{ article.description }}</p>
+                <p>{{ article.body }}</p>
               </div>
             </div>
 

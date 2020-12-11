@@ -1,5 +1,5 @@
 <template>
-  <div class="editor-page ng-scope">
+  <div class="editor-page">
     <div class="container page">
       <div class="row">
         <div class="col-md-10 offset-md-1 col-xs-12">
@@ -24,13 +24,13 @@ export default {
       title: '',
       description: '',
       body: '',
-      tags: ''
+      tagList: []
     }
   }),
   computed: {
     ...mapGetters({
-      isSubmiting: 'createArticleLoading',
-      errors: 'createArticleErrors'
+      isSubmiting: 'articleFormLoading',
+      errors: 'articleFormErrors'
     })
   },
   methods: {

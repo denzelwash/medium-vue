@@ -12,8 +12,13 @@ const createArticle = payload => {
   return axios.post(`/articles`, {article: payload})
 }
 
+const editArticle = payload => {
+  return axios.put(`/articles/${payload.slug}`, {...payload})
+}
+
 export default {
   getArticle,
   deleteArticle,
-  createArticle
+  createArticle,
+  editArticle
 }

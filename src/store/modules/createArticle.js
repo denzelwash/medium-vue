@@ -6,10 +6,10 @@ export default {
     isLoading: false
   }),
   getters: {
-    createArticleLoading(state) {
+    articleFormLoading(state) {
       return state.isLoading
     },
-    createArticleErrors(state) {
+    articleFormErrors(state) {
       return state.errors
     }
   },
@@ -20,7 +20,7 @@ export default {
     createArticleEnd(state) {
       state.isLoading = false
     },
-    createArticleErrors(state, payload) {
+    articleFormErrors(state, payload) {
       state.isLoading = false
       state.errors = payload
     }
@@ -33,7 +33,7 @@ export default {
         commit('createArticleEnd')
         return article
       } catch (e) {
-        commit('createArticleErrors', e.response.data.errors)
+        commit('articleFormErrors', e.response.data.errors)
       }
     }
   }

@@ -46,12 +46,14 @@ export default {
       required: false
     }
   },
-  data: () => ({
-    title: '',
-    description: '',
-    body: '',
-    tagList: ''
-  }),
+  data() {
+    return {
+      title: this.initialValue.title,
+      description: this.initialValue.description,
+      body: this.initialValue.body,
+      tagList: this.initialValue.tagList.join(' ')
+    }
+  },
   methods: {
     onSubmit() {
       const payload = {
