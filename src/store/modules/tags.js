@@ -40,7 +40,6 @@ export default {
         return tags
       } catch (e) {
         commit('getTagsError', e)
-        console.log(e)
       }
     }
   }

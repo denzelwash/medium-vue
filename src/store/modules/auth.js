@@ -42,7 +42,6 @@ export default {
     submitError(state, payload) {
       state.isSubmitting = false
       state.isLoggedIn = false
-      console.log('load errors', payload)
       state.validationErrors = payload
     },
     getCurrentUserStart(state) {

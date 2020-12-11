@@ -8,7 +8,12 @@ const deleteArticle = payload => {
   return axios.delete(`/articles/${payload}`)
 }
 
+const createArticle = payload => {
+  return axios.post(`/articles`, {article: payload})
+}
+
 export default {
   getArticle,
-  deleteArticle
+  deleteArticle,
+  createArticle
 }

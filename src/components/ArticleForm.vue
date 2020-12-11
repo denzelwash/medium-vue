@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ValidationErrors :errors="errors" />
+    <ValidationErrors v-if="errors" :errors="errors" />
     <form @submit.prevent="onSubmit">
       <fieldset>
         <fieldset class="form-group">
@@ -16,7 +16,7 @@
           <input class="form-control" type="text" placeholder="Enter tags" v-model="tagList" />
           <div class="tag-list"></div>
         </fieldset>
-        <button class="btn btn-lg pull-xs-right btn-primary" type="submit">
+        <button class="btn btn-lg pull-xs-right btn-primary" type="submit" :disabled="isSubmiting">
           Publish Article
         </button>
       </fieldset>
@@ -58,7 +58,7 @@ export default {
         title: this.title,
         description: this.description,
         body: this.body,
-        tagList: this.tagList
+        tagList: this.tagList.split(' ')
       }
       this.$emit('submit', payload)
     }

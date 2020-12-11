@@ -40,7 +40,6 @@ export default {
         return article.data.article
       } catch (e) {
         commit('getArticleError', e)
-        console.log(e)
       }
     },
     async deleteArticle({commit}, {slug}) {
@@ -48,7 +47,6 @@ export default {
         return await articleApi.deleteArticle(slug)
       } catch (e) {
         commit('getArticleError', e)
-        console.log(e)
       }
     }
   }

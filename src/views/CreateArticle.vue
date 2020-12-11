@@ -12,6 +12,7 @@
 
 <script>
 import ArticleForm from '@/components/ArticleForm'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'CreateArticle',
@@ -24,13 +25,21 @@ export default {
       description: '',
       body: '',
       tags: ''
-    },
-    errors: null,
-    isSubmiting: false
+    }
   }),
+  computed: {
+    ...mapGetters({
+      isSubmiting: 'createArticleLoading',
+      errors: 'createArticleErrors'
+    })
+  },
   methods: {
-    submit(payload) {
-      console.log(payload)
+    async submit(payload) {
+      const article = await this.$store.dispatch('createArticle', payload)
+      if (article) {
+        const slug = article.data.article.slug
+        this.$router.push({name: 'Article', params: {slug: slug}})
+      }
     }
   }
 }
