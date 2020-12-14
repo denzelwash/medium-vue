@@ -12,8 +12,13 @@ const getCurrentUser = () => {
   return axios.get('/user')
 }
 
+const update = payload => {
+  return axios.put('/user', {user: payload})
+}
+
 export default {
   register,
   login,
-  getCurrentUser
+  getCurrentUser,
+  update
 }

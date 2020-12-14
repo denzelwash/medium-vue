@@ -13,3 +13,11 @@ export const setItem = (key, value) => {
     console.log('Local Storage setItem error:', e)
   }
 }
+
+export const removeItem = key => {
+  try {
+    localStorage.removeItem(key)
+  } catch (e) {
+    console.log('Local Storage removeItem error:', e)
+  }
+}

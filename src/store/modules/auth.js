@@ -1,5 +1,5 @@
 import authApi from '@/api/auth'
-import {setItem} from '@/helpers/localStorage.helper'
+import {setItem, removeItem} from '@/helpers/localStorage.helper'
 
 export default {
   state: () => ({
@@ -58,8 +58,17 @@ export default {
       state.isLoggedIn = false
       state.currentUser = null
     },
+    updateCurrentStart() {},
+    updateCurrentUserEnd(state, payload) {
+      state.currentUser = payload
+    },
+    updateCurrentError() {},
     clearValidationErrors(state) {
       state.validationErrors = null
+    },
+    logout(state) {
+      state.currentUser = null
+      state.isLoggedIn = false
     }
   },
   actions: {
@@ -94,7 +103,21 @@ export default {
       } catch (error) {
         commit('getCurrentUserError', error.response.data.errors)
       }
+    },
+    async update({commit}, payload) {
+      commit('updateCurrentStart')
+      try {
+        const response = await authApi.update(payload)
+        commit('updateCurrentUserEnd', response.data.user)
+        return response.data.user
+      } catch (error) {
+        console.log(error)
+        commit('updateCurrentError', error.response.data.errors)
+      }
+    },
+    logout({commit}) {
+      removeItem('token')
+      commit('logout')
     }
-  },
-  modules: {}
+  }
 }
