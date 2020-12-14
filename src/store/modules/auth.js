@@ -59,7 +59,7 @@ export default {
       state.currentUser = null
     },
     updateCurrentStart() {},
-    updateCurrentUserEnd(state, payload) {
+    updateCurrentEnd(state, payload) {
       state.currentUser = payload
     },
     updateCurrentError() {},
@@ -108,7 +108,7 @@ export default {
       commit('updateCurrentStart')
       try {
         const response = await authApi.update(payload)
-        commit('updateCurrentUserEnd', response.data.user)
+        commit('updateCurrentEnd', response.data.user)
         return response.data.user
       } catch (error) {
         console.log(error)

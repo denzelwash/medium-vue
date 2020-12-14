@@ -15,7 +15,7 @@ export default {
     updateCurrentStart(state) {
       state.isSubmitting = true
     },
-    updateCurrentUserEnd(state) {
+    updateCurrentEnd(state) {
       state.isSubmitting = false
       state.validationErrors = null
     },
