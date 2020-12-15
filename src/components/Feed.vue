@@ -15,12 +15,7 @@
             <span class="date">{{ formatDate(article.createdAt) }}</span>
           </div>
 
-          <button class="btn btn-sm btn-outline-primary">
-            <i class="ion-heart"></i>
-            <span>
-              1
-            </span>
-          </button>
+          <LikeBtn :isFavorited="article.favorited" :count="article.favoritesCount" :slug="article.slug" />
         </div>
 
         <router-link :to="{name: 'Article', params: {slug: article.slug}}" class="preview-link">
@@ -48,6 +43,7 @@ import TagList from '@/components/TagList'
 import {limit} from '@/helpers/vars'
 import {date} from '@/helpers/utils'
 import queryString from 'query-string'
+import LikeBtn from '@/components/LikeBtn'
 
 export default {
   name: 'Feed',
@@ -55,7 +51,8 @@ export default {
     Pagination,
     Loading,
     Error,
-    TagList
+    TagList,
+    LikeBtn
   },
   data: () => ({
     limit
