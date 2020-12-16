@@ -66,8 +66,8 @@ const routes = [
   },
   {
     path: '/profiles/:slug/favorites',
-    name: 'Favorites',
-    component: GlobalFeed
+    name: 'UserProfileFavorites',
+    component: UserProfile
   }
 ]
 
