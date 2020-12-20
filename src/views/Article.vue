@@ -23,15 +23,39 @@
                 <button class="btn btn-outline-danger btn-sm" @click="deleteArticle"><i class="ion-trash-a"></i> Delete Article</button>
               </span>
               <!-- Otherwise, show favorite & follow buttons -->
+              <span v-if="user">
+                <template>
+                  <button
+                    @click="onFollowClick"
+                    class="btn btn-sm action-btn"
+                    :class="[localFollow ? 'btn-secondary' : 'btn-outline-secondary']"
+                    :disabled="followLoading"
+                  >
+                    <i class="ion-plus-round"></i>
+                    &nbsp; {{ followText }} {{ article.author.username }}
+                  </button>
+                  <button
+                    @click="onFavoriteClick"
+                    class="btn btn-sm"
+                    :class="[localFavorite ? 'btn-primary' : 'btn-outline-primary']"
+                    :disabled="favoriteLoading"
+                  >
+                    <i class="ion-heart"></i>
+                    {{ favoriteText }}<span class="counter">({{ localFavoriteCount }})</span>
+                  </button>
+                </template>
+              </span>
               <span v-else>
-                <button class="btn btn-sm action-btn btn-secondary">
-                  <i class="ion-plus-round"></i>
-                  &nbsp; Unfollow GeorgiVatashki
-                </button>
-                <button class="btn btn-sm btn-outline-primary">
-                  <i class="ion-heart"></i>
-                  <span> Favorite Article </span><span class="counter">(1)</span>
-                </button>
+                <template>
+                  <router-link tag="button" :to="{name: 'Register'}" class="btn btn-sm action-btn btn-secondary">
+                    <i class="ion-plus-round"></i>
+                    &nbsp; Follow {{ article.author.username }}
+                  </router-link>
+                  <router-link tag="button" :to="{name: 'Register'}" class="btn btn-sm btn-outline-primary">
+                    <i class="ion-heart"></i>
+                    <span> Favorite Article </span><span class="counter">({{ localFavoriteCount }})</span>
+                  </router-link>
+                </template>
               </span>
             </div>
           </div>
@@ -52,8 +76,8 @@
           </div>
         </div>
         <hr />
-        <!-- <div class="article-actions">
-          <div class="article-meta article-meta--center">
+        <div class="article-actions">
+          <div class="article-meta article-meta-second">
             <router-link :to="{name: 'UserProfile', params: {slug: article.author.username}}">
               <img :src="article.author.image" />
             </router-link>
@@ -64,26 +88,52 @@
               <span class="date">{{ formatDate(article.createdAt) }}</span>
             </div>
             <div>
+              <!-- If current user is the author, show edit/delete buttons -->
               <span v-if="isMyArticle">
-                <router-link class="btn btn-outline-secondary btn-sm" :to="{name: 'EditArticle', params: {slug: article.author.username}}">
+                <router-link class="btn btn-outline-secondary btn-sm" :to="{name: 'EditArticle', params: {slug: article.slug}}">
                   <i class="ion-edit"></i> Edit Article
                 </router-link>
-                <button class="btn btn-outline-danger btn-sm"><i class="ion-trash-a"></i> Delete Article</button>
+                <button class="btn btn-outline-danger btn-sm" @click="deleteArticle"><i class="ion-trash-a"></i> Delete Article</button>
+              </span>
+              <!-- Otherwise, show favorite & follow buttons -->
+              <span v-if="user">
+                <template>
+                  <button
+                    @click="onFollowClick"
+                    class="btn btn-sm action-btn"
+                    :class="[localFollow ? 'btn-secondary' : 'btn-outline-secondary']"
+                    :disabled="followLoading"
+                  >
+                    <i class="ion-plus-round"></i>
+                    &nbsp; {{ followText }} {{ article.author.username }}
+                  </button>
+                  <button
+                    @click="onFavoriteClick"
+                    class="btn btn-sm"
+                    :class="[localFavorite ? 'btn-primary' : 'btn-outline-primary']"
+                    :disabled="favoriteLoading"
+                  >
+                    <i class="ion-heart"></i>
+                    {{ favoriteText }}<span class="counter">({{ localFavoriteCount }})</span>
+                  </button>
+                </template>
               </span>
               <span v-else>
-                <button class="btn btn-sm action-btn btn-secondary">
-                  <i class="ion-plus-round"></i>
-                  &nbsp; Unfollow GeorgiVatashki
-                </button>
-                <button class="btn btn-sm btn-outline-primary">
-                  <i class="ion-heart"></i>
-                  <span> Favorite Article </span><span class="counter">(1)</span>
-                </button>
+                <template>
+                  <router-link tag="button" :to="{name: 'Register'}" class="btn btn-sm action-btn btn-secondary">
+                    <i class="ion-plus-round"></i>
+                    &nbsp; Follow {{ article.author.username }}
+                  </router-link>
+                  <router-link tag="button" :to="{name: 'Register'}" class="btn btn-sm btn-outline-primary">
+                    <i class="ion-heart"></i>
+                    <span> Favorite Article </span><span class="counter">({{ localFavoriteCount }})</span>
+                  </router-link>
+                </template>
               </span>
             </div>
           </div>
-        </div> -->
-        <!-- <div class="row">
+        </div>
+        <div class="row" v-if="user">
           <div class="col-xs-12 col-md-8 offset-md-2">
             <div>
               <form class="card comment-form">
@@ -91,19 +141,19 @@
                   <textarea class="form-control" placeholder="Write a comment..." rows="3"> </textarea>
                 </div>
                 <div class="card-footer">
-                  <img class="comment-author-img" src="https://denzelweb.ru/img/baby.jpg" />
+                  <img class="comment-author-img" :src="user.image" />
                   <button class="btn btn-sm btn-primary" type="submit">
                     Post Comment
                   </button>
                 </div>
               </form>
             </div>
-            <p>
-              <a href="#">Sign in</a> or <a href="#">sign up</a>
-              to add comments on this article.
-            </p>
           </div>
-        </div> -->
+        </div>
+        <div v-else class="text-center">
+          <a href="#" @click.prevent="$router.push({name: 'Login'})">Sign in</a> or
+          <a href="#" @click.prevent="$router.push({name: 'Register'})">Sign up</a> to add comments on this article.
+        </div>
       </div>
     </div>
     <div class="container">
@@ -122,6 +172,11 @@ import TagList from '@/components/TagList'
 
 export default {
   name: 'Article',
+  data: () => ({
+    localFollow: null,
+    localFavorite: null,
+    localFavoriteCount: null
+  }),
   components: {
     Loading,
     Error,
@@ -132,10 +187,18 @@ export default {
       article: 'articleData',
       loading: 'articleIsLoading',
       errors: 'articleErrors',
-      user: 'currentUser'
+      user: 'currentUser',
+      favoriteLoading: 'favoritesIsLoading',
+      followLoading: 'followIsLoading'
     }),
     isMyArticle() {
       return this.user && this.user.username === this.article.author.username
+    },
+    followText() {
+      return this.localFollow ? 'Unfollow' : 'Follow'
+    },
+    favoriteText() {
+      return this.localFavorite ? 'Unfavorite Article' : 'Favorite Article'
     }
   },
   methods: {
@@ -146,10 +209,33 @@ export default {
       await this.$store.dispatch('deleteArticle', {slug: this.$route.params.slug}).then(() => {
         this.$router.push({name: 'GlobalFeed'})
       })
+    },
+    onFollowClick() {
+      if (this.localFollow) {
+        this.$store.dispatch('unfollowUser', this.article.author.username)
+      } else {
+        this.$store.dispatch('followUser', this.article.author.username)
+      }
+      this.localFollow = !this.localFollow
+    },
+    onFavoriteClick() {
+      if (this.localFavorite) {
+        this.$store.dispatch('removeFromFavorites', this.article.slug).then(() => {
+          this.localFavoriteCount--
+        })
+      } else {
+        this.$store.dispatch('addToFavorites', this.article.slug).then(() => {
+          this.localFavoriteCount++
+        })
+      }
+      this.localFavorite = !this.localFavorite
     }
   },
   async mounted() {
     await this.$store.dispatch('getArticle', {slug: this.$route.params.slug})
+    this.localFollow = this.article.author.following
+    this.localFavorite = this.article.favorited
+    this.localFavoriteCount = this.article.favoritesCount
   }
 }
 </script>
@@ -161,5 +247,14 @@ export default {
   &--center {
     justify-content: center;
   }
+}
+.article-actions {
+  display: flex;
+}
+.article-meta-second {
+  margin: 0 auto;
+}
+.text-center {
+  text-align: center;
 }
 </style>

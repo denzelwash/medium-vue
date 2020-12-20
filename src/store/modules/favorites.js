@@ -1,4 +1,4 @@
-import apiFavorites from '@/api/addToFavorites'
+import apiFavorites from '@/api/favorites'
 
 export default {
   state: {
