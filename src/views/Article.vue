@@ -148,6 +148,24 @@
                 </div>
               </form>
             </div>
+            <div v-if="comments && comments.length">
+              <div class="card" v-for="(item, i) in comments" :key="i">
+                <div class="card-block">
+                  <p class="card-text">{{ item.body }}</p>
+                </div>
+                <div class="card-footer">
+                  <router-link tag="a" class="comment-author" :to="{name: 'UserProfile', params: {slug: item.author.username}}">
+                    <img :src="item.author.image" class="comment-author-img" />
+                    <span class="comment-author" href="#/@Denis%20111">{{ item.author.username }}</span>
+                  </router-link>
+                  &nbsp;
+                  <span class="date-posted ng-binding">{{ formatDate(item.createdAt) }}</span>
+                  <span class="mod-options">
+                    <i class="ion-trash-a"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div v-else class="text-center">
@@ -189,7 +207,8 @@ export default {
       errors: 'articleErrors',
       user: 'currentUser',
       favoriteLoading: 'favoritesIsLoading',
-      followLoading: 'followIsLoading'
+      followLoading: 'followIsLoading',
+      comments: 'comments'
     }),
     isMyArticle() {
       return this.user && this.user.username === this.article.author.username
@@ -236,6 +255,8 @@ export default {
     this.localFollow = this.article.author.following
     this.localFavorite = this.article.favorited
     this.localFavoriteCount = this.article.favoritesCount
+    const comments = await this.$store.dispatch('getComments', {slug: this.article.slug})
+    console.log(comments)
   }
 }
 </script>
