@@ -23,7 +23,7 @@
                 <button class="btn btn-outline-danger btn-sm" @click="deleteArticle"><i class="ion-trash-a"></i> Delete Article</button>
               </span>
               <!-- Otherwise, show favorite & follow buttons -->
-              <span v-if="user">
+              <span v-if="user && !isMyArticle">
                 <template>
                   <button
                     @click="onFollowClick"
@@ -45,7 +45,7 @@
                   </button>
                 </template>
               </span>
-              <span v-else>
+              <span v-else-if="!user">
                 <template>
                   <router-link tag="button" :to="{name: 'Register'}" class="btn btn-sm action-btn btn-secondary">
                     <i class="ion-plus-round"></i>
@@ -96,7 +96,7 @@
                 <button class="btn btn-outline-danger btn-sm" @click="deleteArticle"><i class="ion-trash-a"></i> Delete Article</button>
               </span>
               <!-- Otherwise, show favorite & follow buttons -->
-              <span v-if="user">
+              <span v-if="user && !isMyArticle">
                 <template>
                   <button
                     @click="onFollowClick"
@@ -118,7 +118,7 @@
                   </button>
                 </template>
               </span>
-              <span v-else>
+              <span v-else-if="!user">
                 <template>
                   <router-link tag="button" :to="{name: 'Register'}" class="btn btn-sm action-btn btn-secondary">
                     <i class="ion-plus-round"></i>
