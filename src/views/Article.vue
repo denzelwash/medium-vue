@@ -136,13 +136,13 @@
         <div class="row" v-if="user">
           <div class="col-xs-12 col-md-8 offset-md-2">
             <div>
-              <form class="card comment-form">
+              <form class="card comment-form" @submit.prevent="commentSubmit">
                 <div class="card-block">
-                  <textarea class="form-control" placeholder="Write a comment..." rows="3"> </textarea>
+                  <textarea class="form-control" placeholder="Write a comment..." rows="3" v-model="textarea" required> </textarea>
                 </div>
                 <div class="card-footer">
                   <img class="comment-author-img" :src="user.image" />
-                  <button class="btn btn-sm btn-primary" type="submit">
+                  <button class="btn btn-sm btn-primary" type="submit" :disabled="addCommentLoading">
                     Post Comment
                   </button>
                 </div>
@@ -156,11 +156,11 @@
                 <div class="card-footer">
                   <router-link tag="a" class="comment-author" :to="{name: 'UserProfile', params: {slug: item.author.username}}">
                     <img :src="item.author.image" class="comment-author-img" />
-                    <span class="comment-author" href="#/@Denis%20111">{{ item.author.username }}</span>
+                    <span class="comment-author">{{ item.author.username }}</span>
                   </router-link>
                   &nbsp;
                   <span class="date-posted ng-binding">{{ formatDate(item.createdAt) }}</span>
-                  <span class="mod-options">
+                  <span class="mod-options" @click="deleteComment(item.id)">
                     <i class="ion-trash-a"></i>
                   </span>
                 </div>
@@ -193,7 +193,8 @@ export default {
   data: () => ({
     localFollow: null,
     localFavorite: null,
-    localFavoriteCount: null
+    localFavoriteCount: null,
+    textarea: ''
   }),
   components: {
     Loading,
@@ -208,7 +209,8 @@ export default {
       user: 'currentUser',
       favoriteLoading: 'favoritesIsLoading',
       followLoading: 'followIsLoading',
-      comments: 'comments'
+      comments: 'comments',
+      addCommentLoading: 'addCommentLoading'
     }),
     isMyArticle() {
       return this.user && this.user.username === this.article.author.username
@@ -248,6 +250,14 @@ export default {
         })
       }
       this.localFavorite = !this.localFavorite
+    },
+    commentSubmit() {
+      this.$store.dispatch('addComment', {slug: this.article.slug, data: this.textarea}).then(() => {
+        this.textarea = ''
+      })
+    },
+    deleteComment(id) {
+      this.$store.dispatch('deleteComment', {slug: this.article.slug, id})
     }
   },
   async mounted() {
@@ -255,8 +265,7 @@ export default {
     this.localFollow = this.article.author.following
     this.localFavorite = this.article.favorited
     this.localFavoriteCount = this.article.favoritesCount
-    const comments = await this.$store.dispatch('getComments', {slug: this.article.slug})
-    console.log(comments)
+    await this.$store.dispatch('getComments', {slug: this.article.slug})
   }
 }
 </script>
